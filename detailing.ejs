@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%-include('../partials/head.ejs')%>
+</head>
+<header>
+    <%-include('../partials/header.ejs')%>
+        <!-- ////// molstar////////////////////////////// plugin/////////////////////////////////////////// -->
+        <link rel="stylesheet" type="text/css" href="/static/molstar.css">
+        <script type="text/javascript"
+            src="https://www.ebi.ac.uk/pdbe/pdb-component-library/js/pdbe-molstar-plugin-3.0.0.js"></script>
+        <style>
+            #myViewer1 {
+                display: flex;
+                align-content: centre;
+                width: 400px;
+                height: 400px;
+                position: relative;
+            }
+
+            #structure2 {
+                display: flex;
+                align-content: centre;
+                width: 400px;
+                height: 400px;
+                position: relative;
+            }
+
+            #structure3 {
+                display: flex;
+                align-content: centre;
+                width: 400px;
+                height: 400px;
+                position: relative;
+            }
+
+            #div_main {
+                text-align: center;
+            }
+
+            #div1 {
+                display: inline-block;
+                vertical-align: middle;
+                padding: 2rem;
+            }
+        </style>
+
+        <!-- /////////////////////////molstar////////////plugin ///////////////////////////////////////// -->
+</header>
+
+<body class="container-fluid">
+    <!-- ////////////////////data from searchdata///////////////////////////////////////////////////// -->
+    <p>
+        <% docs1 %>
+        <% searchingit %>
+    </p>
+    <% searchingit.forEach(variable=>{ %> 
+      <% Id = variable['ID'];%>
+      <% Entry = variable ['Entry'];%>
+      <% Status = variable['Status'];%>
+      <% Length = variable['Length'];%>
+      <% Entryname = variable['Entryname'];%>
+      <% Protein_name = variable['Protein_names'];%>
+      <% Gene_name = variable['Gene_name'];%>
+      <% Pfam = variable['Pfam'];%>
+      <% Interpro = variable['Interpro'];%>
+      <% Panther = variable['Panther'];%>
+      <% Lineage = variable['Lineage'];%>
+      <% Organism = variable['Organism'];%>
+      <% TM1 = variable['TM1'] ;%>
+      <% TM2 = variable['TM2'] ;%>
+      <% TM3 = variable['TM3'] ;%>
+      <% TM4 = variable['TM4'] ;%>
+      <% TM5 = variable['TM5'] ;%>
+      <% TM6 = variable['TM6'] ;%>
+      <% TM7 = variable['TM7'] ;%>
+      <% N13 = variable['N13'] ;%>
+      <% S53 = variable['S53'] ;%>
+      <% N54 = variable['N54'] ;%>
+      <% Y70 = variable['Y70'] ;%>
+      <% F20 = variable['F20'] ;%>
+      <% G48 = variable['G48'] ;%>
+      <% G49 = variable['G49'] ;%>
+      <% G50 = variable['G50'] ;%>
+      <% D99 = variable['D99'] ;%>
+      <% R139 = variable['R139'] ;%>
+      <% D140 = variable['D140'] ;%>
+      <% Y155 = variable['Y155'] ;%>
+      <% F106 = variable['F106'] ;%>
+      <% G134 = variable['G134'] ;%>
+      <% G135 = variable['G135'] ;%>
+      <% G136 = variable['G136'] ;%>
+      <% Mass = variable['Mass'] ;%>
+      <% sequence = variable['sequence'] ;%>
+      <% fasta_id = variable['fasta_id'] ;%>
+      <% GATE_NTHB = variable['GATE_NTHB'] ;%>
+      <% GATE_CTHB = variable['GATE_CTHB'] ;%>
+      <% G_NTHB = variable['G_NTHB'] ;%>
+      <% G_CTHB = variable['G_CTHB'] ;%>
+      <% G_NTHB1 = variable['G_NTHB1'] ;%>
+      <% Y70i = variable['Y70i'] ;%>
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+        <div>
+            <h4 style="text-align: center; background-color: rgb(226, 226, 226); padding: 5px;"> Details Information: <%=Entry%></h4>
+        </div>
+        <div class="row">
+            <p> The information on this page is divided into 3 subsections i.e., <a style="text-decoration: none;" href="#general">General Information</a>, <a style="text-decoration: none;" href="#sequence">Sequence Information</a> and <a style="text-decoration: none;" href="#structure">Structural Information</a>. In the general information section, information like protein name, protein lineage, protein family information, gene information, organism name etc, are present. In the sequence information section, information like the FASTA sequence of the protein, structure-based sequence alignment with known structure and reviewed sequence is present. This section also holds information on residues present at functionally important positions of <%=Entry%> w.r.t to known crystal structure. The structural information section holds modeled structure of <%=Entry%> in the open and closed state conformation constructed using homology modeling along with the <a style="text-decoration: none;" href="https://alphafold.ebi.ac.uk/">Alphafold</a> predicted structure. The modeled structure generated using <a style="text-decoration: none;" href="https://salilab.org/modeller/">Modeller</a> (in open and closed state using homology modeling) is comparable to Alphafold's predicted structure. User can also download all the modeled structure in open and closed conformation (modeled using Modeller) and Alphafold predicted structure.  The Mol* Viewer plugin will help the user visualize the protein structure within the database and perform fundamental analysis. <a style="text-decoration: none;" href="https://molstar.org/viewer-docs/">Mol* Viewer Features</a></p>
+        </div>
+        <div class="row" id="general" style="padding: 5px;">
+            <h5 style="background-color: #bff8fc; margin: 5px; padding: 5px;"> General information </h5>
+            <br>
+            <div class="col">
+                <p> <b>  dbTRIC Id : </b>  <%= Id %> </p>
+                <p> <b>  Uniprot Id : </b> <%= Entry %> </p>
+                <p> <b>  Status :  </b> <%= Status %> </p>
+                <p> <b>  Uniprot Entryname : </b> <%= Entryname %> </p>
+                <p> <b>  Protein Name : </b> <%= Protein_name %> </p>
+                <p> <b>  Mass : </b>  <%= Mass %></p>
+            </div>
+            <div class="col"> 
+                <p> <b>  Organism Name : </b> <em> <%= Organism %> </em> </p>
+            <p> <b>  Gene name :  </b> <%= Gene_name %></p>
+            <p> <b>  Pfam Id : </b>  <%= Pfam %></p>
+            <p> <b>  InterPro Id : </b>  <%= Interpro %></p>
+            <p> <b>  Lineage :  </b> <%= Lineage %></p> 
+            </div>
+        </div>
+
+        <!-- ///////////////////sequence information/////////////////////////////////////////////////////// -->
+
+        <div class="row" id="sequence" style="padding: 5px;">
+            <h5 style="background-color: #bff8fc; margin: 5px; padding: 5px;"> Sequence information </h5>
+            <br>
+            <h6 > <span style="background-color: rgb(215 215 215); padding: 4px;"> FASTA sequence:</span> </h6>
+            <p style=" overflow-wrap: break-word;"> <%= fasta_id %>
+                <%= sequence %>
+            <h6 style="text-align: center;"> <span style="padding: 4px;"> Transmembrane Region of <%=Entry%> and Structure Based Sequence Alignment</span> </h6>
+            <div class="table-responsive">
+            <p style=" overflow-wrap: break-word;">
+                <table class="table table-bordered" style="font-family:'Courier New', Courier, monospace" >
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Transmembrane Helix1</th>
+                        <th>Transmembrane Helix2</th>
+                        <th>Transmembrane Helix3</th>
+                        <th>Transmembrane Helix4</th>
+                        <th>Transmembrane Helix5</th>
+                        <th>Transmembrane Helix6</th>
+                        <th>Transmembrane Helix7</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background-color: rgb(215 215 215);">
+                        <td style="background-color: rgb(245, 185, 185);"><%=Entry%></td>
+                        <td><p id="tm1"> <%= TM1 %> </p></td>
+                        <td><p id="tm2"> <%= TM2 %> </p></td>
+                        <td><p id="tm3"> <%= TM3 %> </p></td>
+                        <td><p id="tm4"> <%= TM4 %> </p></td>
+                        <td><p id="tm5"> <%= TM5 %> </p></td>
+                        <td><p id="tm6"> <%= TM6 %> </p></td>
+                        <td><p id="tm6"> <%= TM7 %> </p></td>
+                      </tr>
+                      <tr>
+                        <td>Q47UY7</td>
+                        <td><p> FYL<span style='background-color:#68FF33'>D</span>IFGVIV<span style='background-color:#FA6303'>F</span>ALSGALMAGR </p></td>
+                        <td><p>PFGVVVLASVTAV<span style='background-color:#FF33A9'>GGG</span>TI<span style='background-color:#68FF33'>RD</span>VILQT</p></td>
+                        <td><p>KPY<span style='background-color:#68FF33'>Y</span>LYVILATAILTIVLIR</p></td>
+                        <td><p>KRFLLIA<span style='background-color:#33B7FF'>D</span>ALGLAL<span style='background-color:#FF3333'>F</span>AVLGTQKALY</p></td>
+                        <td><p>IPVAVVLGTITGI<span style='background-color:#F2F201'>AGG</span>MI<span style='background-color:#33B7FF'>RD</span>VLCNV</p></td>
+                        <td><p><span style='background-color:#33B7FF'>Y</span>ALAAMLGGSLFIILHGLNW</p></td>
+                        <td><p>AMIVSISAALALRLAAIYWHV</p></td>
+                      </tr>
+                      <tr style="background-color: rgb(215 215 215);">
+                        <td>Q3HKN0</td>
+                        <td><p> ILL<span style='background-color:#68FF33'>D</span>WFGLCI<span style='background-color:#FA6303'>F</span>TVTGALVASR</p></td>
+                        <td><p>IAGFVLLGAVTGV<span style='background-color:#FF33A9'>GGG</span>TI<span style='background-color:#68FF33'>RD</span>LVLGR</p></td>
+                        <td><p>EPA<span style='background-color:#68FF33'>Y</span>VLACLGVAVFTFFFAH</p></td>
+                        <td><p>YRFLLWL<span style='background-color:#33B7FF'>D</span>AVGLSL<span style='background-color:#FF3333'>F</span>AVTGAERALQ</p></td>
+                        <td><p>PVIAIAMGVATAT<span style='background-color:#F2F201'>FGG</span>IL<span style='background-color:#33B7FF'>RD</span>LLGGE</p></td>
+                        <td><p><span style='background-color:#33B7FF'>Y</span>ITAALLGAAAFVALDAFGA</p></td>
+                        <td><p>ALGAGFAAAFLSRAAGLVWGL</p></td>
+                      </tr>
+                      <tr>
+                        <td>5WUC</td>
+                        <td><p> DIF<span style='background-color:#68FF33'>N</span>YIGIVA<span style='background-color:#FA6303'>F</span>AISGAIKAVK</p></td>
+                        <td><p>LLGVLVLGFSTAL<span style='background-color:#FF33A9'>GGG</span>II<span style='background-color:#68FF33'>SN</span>LLLGK</p></td>
+                        <td><p>LIY<span style='background-color:#68FF33'>Y</span>PYPITAFLASLATFVF</p></td>
+                        <td><p>GKPLLYA<span style='background-color:#33B7FF'>D</span>AIGLGA<span style='background-color:#FF3333'>F</span>ASSGASLAYS</p></td>
+                        <td><p>VILVVIVGAITAV<span style='background-color:#F2F201'>GGG</span>VI<span style='background-color:#33B7FF'>RD</span>ILSNE</p></td>
+                        <td><p><span style='background-color:#33B7FF'>Y</span>ATTAVIGSFVYFIASDLSV</p></td>
+                        <td><p>ALIVSFLITLILRILAMELKW</p></td>
+                      </tr>
+                      <tr style="background-color: rgb(215 215 215);">
+                        <td>5H36</td>
+                        <td><p>FYL<span style='background-color:#68FF33'>D</span>IFGVIV<span style='background-color:#FA6303'>F</span>ALSGALMAGR</p></td>
+                        <td><p>PFGVVVLASVTAV<span style='background-color:#FF33A9'>GGG</span>TI<span style='background-color:#68FF33'>RD</span>VILQT</p></td>
+                        <td><p>EKP<span style='background-color:#68FF33'>Y</span>YLYVILATAILTIVLI</p></td>
+                        <td><p>KRFLLIA<span style='background-color:#33B7FF'>D</span>ALGLAL<span style='background-color:#FF3333'>F</span>AVLGTQKALY</p></td>
+                        <td><p>IPVAVVLGTITGI<span style='background-color:#F2F201'>AGG</span>ML<span style='background-color:#33B7FF'>RD</span>VLCNV</p></td>
+                        <td><p><span style='background-color:#33B7FF'>Y</span>ALAAMLGGSLFIILHGLNW</p></td>
+                        <td><p>AMIVSISAALALRLAAIYWHV</p></td>
+                      </tr>
+                    </tbody>
+                    <caption >In this study, the reference sequence used for curation and alignment is <i>Sulfolobus acidocaldarius</i> (PDB: 5WUC). The transmembrane segment of the reference structure is represented table above. TRIC proteins have 2 inverted-repeat triple helix bundles (N-THB, C-THB). The residues are highlighted according to the function w.r.t to their Triple Helical Bundle. Residues highlighted in <span style="background-color:#68FF33">DD</span> are Periplasmic Gate forming residues of the N-Triple Helix Bundle. Residues highlighted in <span style="background-color:#FA6303">FF</span> are present in the narrowest pore region of N-THB, and residues highlighted in <span style='background-color:#FF33A9'>GG</span> are glycine motifs responsible for Kink in TM2 from N-THB.
+                    Residues highlighted in <span style="background-color:#33B7FF">DD</span> are Cytoplasmic Gate forming residues of the C-Triple Helix Bundle. Residues highlighted in <span style="background-color:#FF3333">FF</span> are present in the narrowest pore region of C-THB, and residues highlighted in <span style='background-color:#F2F201'>GG</span> are glycine motifs responsible for Kink in TM5 from C-THB.</caption>
+                  </table>
+                  <script>
+                    // /////////////////// tm1/////////////////////////////
+                    var tm1= document.getElementById("tm1").innerHTML;
+                    var tm1_sub1=tm1.substr(0,4);
+                    var tm1_sub2="<span style='background-color:#68FF33'>"+tm1[4]+"</span>";
+                    var tm1_sub3=tm1.substr(5,6);
+                    var tm1_sub4="<span style='background-color:#FA6303'>"+tm1[11]+"</span>";
+                    var tm1_sub5=tm1.substr(12,);
+                    var total_tm1= tm1_sub1+ tm1_sub2+ tm1_sub3 +tm1_sub4 +tm1_sub5;
+                    document.getElementById("tm1").innerHTML=total_tm1;
+                    // console.log(tm1_sub1, tm1_sub2, tm1_sub3 ,tm1_sub4 ,tm1_sub5,total_tm1);
+                    ///////////////////////////////////////////////////////
+      
+                    // /////////////////// tm2/////////////////////////////
+                    var tm2= document.getElementById("tm2").innerHTML;
+                    var tm2_sub1=tm2.substr(0,14);
+                    var tm2_sub2="<span style='background-color:#FF33A9'>"+tm2.substr(14,3)+"</span>";
+                    var tm2_sub3=tm2.substr(17,2);
+                    var tm2_sub4="<span style='background-color:#68FF33'>"+tm2.substr(19,2)+"</span>";
+                    var tm2_sub5=tm2.substr(21,);
+                    var total_tm2= tm2_sub1 + tm2_sub2 + tm2_sub3 + tm2_sub4 + tm2_sub5;
+                    document.getElementById("tm2").innerHTML=total_tm2;
+                    // console.log(tm2_sub1,tm2_sub2,tm2_sub3,tm2_sub4 ,tm2_sub5,total_tm2);
+                    ///////////////////////////////////////////////////////
+      
+                    // /////////////////// tm3/////////////////////////////
+                    var tm3= document.getElementById("tm3").innerHTML;
+                    var tm3_sub1=tm3.substr(0,4);
+                    var tm3_sub2="<span style='background-color:#68FF33'>"+tm3[4]+"</span>";
+                    var tm3_sub3=tm3.substr(5,);
+                    var total_tm3= tm3_sub1+ tm3_sub2+ tm3_sub3;
+                    document.getElementById("tm3").innerHTML=total_tm3;
+                    // console.log(tm3_sub1,tm3_sub2,tm3_sub3,total_tm3);
+                    ///////////////////////////////////////////////////////
+      
+                    // /////////////////// tm4/////////////////////////////
+                    var tm4= document.getElementById("tm4").innerHTML;
+                    var tm4_sub1=tm4.substr(0,8);
+                    var tm4_sub2="<span style='background-color:#33B7FF'>"+tm4[8]+"</span>";
+                    var tm4_sub3=tm4.substr(9,6);
+                    var tm4_sub4="<span style='background-color:#FF3333'>"+tm4[15]+"</span>";
+                    var tm4_sub5=tm4.substr(16,);
+                    var total_tm4= tm4_sub1 + tm4_sub2 + tm4_sub3 + tm4_sub4 + tm4_sub5;
+                    document.getElementById("tm4").innerHTML=total_tm4;
+                    // console.log(tm4_sub1,tm4_sub2,tm4_sub3,tm4_sub4 ,tm4_sub5,total_tm4);
+                    ///////////////////////////////////////////////////////
+      
+                    // /////////////////// tm5/////////////////////////////
+                    var tm5= document.getElementById("tm5").innerHTML;
+                    var tm5_sub1=tm5.substr(0,14);
+                    var tm5_sub2="<span style='background-color:#F2F201'>"+tm5.substr(14,3)+"</span>";
+                    var tm5_sub3=tm5.substr(17,2);
+                    var tm5_sub4="<span style='background-color:#33B7FF'>"+tm5.substr(19,2)+"</span>";
+                    var tm5_sub5=tm5.substr(21,);
+                    var total_tm5= tm5_sub1 + tm5_sub2 + tm5_sub3 + tm5_sub4 + tm5_sub5;
+                    document.getElementById("tm5").innerHTML=total_tm5;
+                    // console.log(tm5_sub1,tm5_sub2,tm5_sub3,tm5_sub4 ,tm5_sub5,total_tm5);
+                    ///////////////////////////////////////////////////////
+      
+                    // /////////////////// tm6/////////////////////////////
+                    var tm6= document.getElementById("tm6").innerHTML;
+                    var tm6_sub1="<span style='background-color:#33B7FF'>"+tm6.substr(0,2)+"</span>";
+                    var tm6_sub2=tm6.substr(2,);
+                    var total_tm6= tm6_sub1 + tm6_sub2;
+                    document.getElementById("tm6").innerHTML=total_tm6;
+                    // console.log(tm6_sub1,tm6_sub2,total_tm6);
+                    ///////////////////////////////////////////////////////
+                  </script>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <h6 style="text-align: center;"> <span style="padding: 4px;"> Residues at functionally important positions</span> </h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <caption>Conservation of functionally important residues in N-Triple Helix Bundle of <%= Entry %>, residue numbering w.r.t 5WUC crystal structure</caption>
+                            <col>
+                            <colgroup span="1"></colgroup>
+                            <colgroup span="4"></colgroup>
+                            <colgroup span="1"></colgroup>
+                            <colgroup span="3"></colgroup>
+                            <tr>
+                              <!-- <td rowspan="2"></td> -->
+                              <th colspan="1" scope="colgroup"></th>
+                              <th colspan="4" scope="colgroup" style="background-color:#c0fcaa;">Periplasmic Gate forming residues of N-Triple Helix Bundle</th>
+                              <th colspan="1" scope="colgroup" style="background-color:#f8b184;" >Pore Constriction of N-THB</th>
+                              <th colspan="3" scope="colgroup" style="background-color:#fca0d6;"> Glycine motif of N-Triple Helix Bundle (resposnsible for Kink in TM2)</th>
+                            </tr>
+                            <tr style="text-align: center;">
+                                <th width="20" > Helix number</th>
+                                <th width="10" > TM1 </th>
+                                <th width="10" > TM2 </th>
+                                <th width="10" > TM2 </th>
+                                <th width="10" > TM3 </th>
+                                <th width="10" > TM1 </th>
+                                <th width="10" > TM2 </th>
+                                <th width="10" > TM2 </th>
+                                <th width="10" > TM2 </th>
+                            </tr>
+                            <tr style="background-color: rgb(215 215 215); text-align: center;">
+                                <th width="20" > Residues in reference (5WUC)</th>
+                                <th width="10" > N13 </th>
+                                <th width="10" > S53 </th>
+                                <th width="10" > N54 </th>
+                                <th width="10" > Y70 </th>
+                                <th width="10" > F20 </th>
+                                <th width="10" > G48 </th>
+                                <th width="10" > G49 </th>
+                                <th width="10" > G50 </th>
+                            </tr>
+            
+                            <tr style="text-align: center;">
+                              <th width="20">Substituted Residues</th>  
+                              <th width="10"> <%= N13 %> </th>
+                              <th width="10"> <%= S53 %> </th> 
+                              <th width="10"> <%= N54 %> </th>
+                              <th width="10"> <%= Y70i %> </th>
+                              <th width="10"> <%= F20 %> </th> 
+                              <th width="10"> <%= G48 %> </th>
+                              <th width="10"> <%= G49 %> </th> 
+                              <th width="10"> <%= G50 %> </th>
+                            </tr> 
+                        </table>
+                    </div>
+                    <br>
+                    <div class="table-responsive">
+                        <br>
+                <table class="table table-bordered">
+                <caption > Conservation of functionally important residues in C-Triple Helix Bundle of <%= Entry %>, residue numbering w.r.t 5WUC crystal structure </caption>
+                <col>
+                <colgroup span="1"></colgroup>
+                <colgroup span="4"></colgroup>
+                <colgroup span="1"></colgroup>
+                <colgroup span="3"></colgroup>
+                <tr>
+                  <th colspan="1" scope="colgroup"></th>
+                  <th colspan="4" scope="colgroup" style="background-color:#a2c8fa;">Cytoplasmic Gate forming residues of C-Triple Helix Bundle</th>
+                  <th colspan="1" scope="colgroup" style="background-color:#faa4a4;">Pore Constriction of C-THB</th>
+                  <th colspan="3" scope="colgroup" style="background-color:#fffeb4;">Glycine motif of C-Triple Helix Bundle (resposnsible for Kink in TM5)</th>
+                </tr>
+                <tr style="text-align: center;">
+                    <th width="20" > Helix number</th>
+                    <th width="10" > TM4 </th>
+                    <th width="10" > TM5 </th>
+                    <th width="10" > TM5 </th>
+                    <th width="10" > TM6 </th>
+                    <th width="10" > TM4 </th>
+                    <th width="10" > TM5 </th>
+                    <th width="10" > TM5 </th>
+                    <th width="10" > TM5 </th>
+                </tr>
+                <tr style="background-color: rgb(215 215 215); text-align: center;">
+                    <th width="20" > Residues in reference (5WUC)</th>
+                    <th width="10" > D99 </th>
+                    <th width="10" > R139 </th>
+                    <th width="10" > D140 </th>
+                    <th width="10" > Y155 </th>
+                    <th width="10" > F106 </th>
+                    <th width="10" > G134 </th>
+                    <th width="10" > G135 </th>
+                    <th width="10" > G136 </th>
+                </tr>
+
+                <tr style="text-align: center;">
+                  <th width="20">Substituted Residues</th>  
+                  <th width="10"> <%= D99 %> </th>
+                  <th width="10"> <%= R139 %> </th> 
+                  <th width="10"> <%= D140 %> </th>
+                  <th width="10"> <%= Y155 %> </th>
+                  <th width="10"> <%= F106 %> </th> 
+                  <th width="10"> <%= G134 %> </th>
+                  <th width="10"> <%= G135 %> </th> 
+                  <th width="10"> <%= G136 %> </th>
+                </tr> 
+                </table>
+                </div>
+                </div>
+
+                <!-- ///////////////////sequence information/////////////////////////////////////////////////////// -->
+
+                <div class="row" id="structure">
+                    <h5 style="background-color: #bff8fc; margin: 5px; padding: 5px;"> Structural Information</h5>
+                    <p> The closed and open state structure of <%=Entry%> is modeled using <a style="text-decoration: none;" href="https://salilab.org/modeller/">Modeller</a> and <a style="text-decoration: none;" href="https://alphafold.ebi.ac.uk/">Alphafold</a> structure of <%=Entry%> is retrived from Alphafold database.</p>
+                    <p> Template structure for <b> closed state</b>: 5WUC  <br> <b>Modelled structure</b>: <%= Entry %>_closed.pdb </p>
+                    <p> Template structure for <b> open state </b>: 5WUE <br> <b>Modelled structure</b>: <%= Entry %>_open.pdb </p>
+                    <div id="div_main">
+                        <div id="div1"> 
+                        <div id="myViewer1"></div>
+                        <script>
+                          var viewerInstance = new PDBeMolstarPlugin();
+                          var options = {
+                          customData: {url:'http://172.26.90.12/pdb_test/<%= Entry %>_closed.pdb',format:'pdb'},hideControls:true, sequencePanel:true
+                          }
+                          var viewerContainer = document.getElementById('myViewer1');
+                          viewerInstance.render(viewerContainer, options);
+                        </script>
+                        <form method="get" action='http://172.26.90.12/pdb_test/<%= Entry %>_closed.pdb'>
+                          <button class="btn btn-outline-dark" type="submit">Download the closed state structure</button>
+                       </form>
+                        </div>
+                        <div id="div1">
+                        <div id="structure2"></div> 
+                        <script>
+                          var viewerInstance = new PDBeMolstarPlugin();
+                          var options = {
+                          customData: {url:'http://172.26.90.12/pdb_test/<%= Entry %>_open.pdb',format:'pdb'},
+                          hideControls:true, sequencePanel:true
+                          }
+                          var viewerContainer = document.getElementById('structure2');
+                          viewerInstance.render(viewerContainer, options); 
+                        </script>
+                        <form method="get" action='http://172.26.90.12/pdb_test/<%= Entry %>_open.pdb'>
+                          <button class="btn btn-outline-dark" type="submit">Download the open state structure</button>
+                       </form>
+                        </div>
+                        <div id="div1">
+                          <div id="structure3"></div> 
+                          <script>
+                            var viewerInstance = new PDBeMolstarPlugin();
+                            var options = {
+                            customData: {url:' https://alphafold.ebi.ac.uk/files/AF-<%=Entry%>-F1-model_v4.pdb ',format:'pdb'},
+                            hideControls:true, sequencePanel:true
+                            }
+                            var viewerContainer = document.getElementById('structure3');
+                            viewerInstance.render(viewerContainer, options); 
+                          </script>
+                          <form method="get" action='https://alphafold.ebi.ac.uk/files/AF-<%=Entry%>-F1-model_v4.pdb'>
+                            <button class="btn btn-outline-dark" type="submit">Download the alphafold structure </button>
+                         </form>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+        </div>
+
+
+
+
+
+<!-- ///////////////////////////// -->
+        <% });%>
+<!-- ///////////////////////////// -->
+
+    <footer>
+        <%- include ('../partials/footer');%>
+    </footer>
+</body>
